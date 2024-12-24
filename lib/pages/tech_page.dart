@@ -28,7 +28,6 @@ class _TechPageState extends State<TechPage> {
         child: Consumer<CategoryProvider>(
           builder: (context, apiProvider, child) {
             final response = apiProvider.respObj;
-
             if (response.apiState == ApiState.initial) {
               return const Center(
                 child: CircularProgressIndicator()
@@ -36,6 +35,7 @@ class _TechPageState extends State<TechPage> {
             }
 
             else if(response.apiState == ApiState.success){
+              
               if (response.data != null) {
                 List<NewsModel> articles = response.data;
                 return ListView.builder(
