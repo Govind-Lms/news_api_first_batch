@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:news_api/pages/business_page.dart';
-import 'package:news_api/pages/entertainment_page.dart';
-import 'package:news_api/pages/health_page.dart';
-import 'package:news_api/pages/everything_page.dart';
-import 'package:news_api/pages/tech_page.dart';
+import 'package:news_api/pages/search_page.dart';
+import 'package:news_api/pages/tabs/business_page.dart';
+import 'package:news_api/pages/tabs/entertainment_page.dart';
+import 'package:news_api/pages/tabs/everything_page.dart';
+import 'package:news_api/pages/tabs/health_page.dart';
+import 'package:news_api/pages/tabs/tech_page.dart';
 import 'package:news_api/providers/category_provider.dart';
 import 'package:news_api/providers/everything_provider.dart';
 import 'package:provider/provider.dart';
@@ -27,68 +28,52 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const TabViewPage(),
+      home: const BottomNav(),
     );
   }
 }
 
-// class BottomNav extends StatefulWidget {
-//   const BottomNav({super.key});
-
-//   @override
-//   State<BottomNav> createState() => _BottomNavState();
-// }
-
-// class _BottomNavState extends State<BottomNav> {
-//   var currentIndex = 0;
-
-//   var bodies = const [
-//     CategoryPage(),
-//     Scaffold(),
-//     EverythingPage(),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: bodies[currentIndex],
-//       bottomNavigationBar: BottomNavigationBar(
-//         currentIndex: currentIndex,
-//         onTap: (index) {
-//           setState(() {
-//             currentIndex = index;
-//           });
-//         },
-//         items: const [
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.post_add), label: "Category"),
-//           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Empty"),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.comment), label: "Everything"),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-class TabViewPage extends StatefulWidget {
-  const TabViewPage({super.key});
+class BottomNav extends StatefulWidget {
+  const BottomNav({super.key});
 
   @override
-  State<TabViewPage> createState() => _TabViewPageState();
+  State<BottomNav> createState() => _BottomNavState();
 }
 
-class _TabViewPageState extends State<TabViewPage> with SingleTickerProviderStateMixin {
-  // TabController tabController;
+class _BottomNavState extends State<BottomNav> {
+  var currentIndex = 0;
 
-  // @override
-  // void initState() {
-  //   tabController = TabController(length: 4, vsync: this);
-  //   tabController.addListener(() {
-  //     setState(() {});
-  //   });
-  //   super.initState();
-  // }
+  var bodies = const [
+    TabViewPage(),
+    EverythingPage(),
+    SearchPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: bodies[currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.post_add), label: "Category"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Empty"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search), label: "Search"),
+        ],
+      ),
+    );
+  }
+}
+
+class TabViewPage extends StatelessWidget {
+  const TabViewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,12 +81,8 @@ class _TabViewPageState extends State<TabViewPage> with SingleTickerProviderStat
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          // backgroundColor: Colors.green,
           title: const Text("News Api"),
           bottom: const TabBar(
-            // isScrollable: true,
-
-            // controller: tabController,
             tabs: [
               Tab(
                 text: "Business",

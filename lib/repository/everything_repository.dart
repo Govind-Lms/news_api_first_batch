@@ -5,15 +5,15 @@ import 'package:news_api/network/resp_obj.dart';
 class EverythingRepository  {
   
   final apiService = ApiService();
-  Future<RespObj> getDesiredList(String endpointUrl) async{
+  Future<RespObj> getDesiredList(String searchString,String? filteredBy, String? fromDate , String? toDate) async{
     final response = await apiService.get(
-      endpointUrl,
+      everythingEndpoint,
       params: {
-        //we can also parse "q and sortBy" from Provider
-        // (q = "google/tesla/apple/...")
-        "q" : "tesla",
-        "sortBy" : "publishedAt",
+        "q" : searchString,
         "apiKey": apiKey,
+        if (fromDate != null) "from": fromDate,
+        if (toDate != null) "to": toDate,
+        if (filteredBy != null) "sortBy": filteredBy,
       }
     );
     return response;

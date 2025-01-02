@@ -16,7 +16,7 @@ class _EverythingPageState extends State<EverythingPage> {
   @override
   void initState() {
     super.initState();
-    context.read<EverythingProvider>().getApiData();
+    context.read<EverythingProvider>().getApiData("apple");
   }
 
   @override
@@ -109,6 +109,20 @@ class DetailsPage extends StatelessWidget {
           ),
           Text(
             apiModel.content.toString(),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+           Text(
+            apiModel.author.toString(),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+          Text(
+            apiModel.publishedAt.toString(),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.normal,

@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_api/models/news_model.dart';
 import 'package:news_api/network/resp_obj.dart';
-import 'package:news_api/pages/health_page.dart';
+import 'package:news_api/pages/tabs/health_page.dart';
 import 'package:news_api/providers/category_provider.dart';
 import 'package:provider/provider.dart';
 

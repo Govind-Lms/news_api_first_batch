@@ -12,6 +12,8 @@ class CategoryProvider extends ChangeNotifier{
   
   Future<void> getApiData(String categoryName) async {
 
+    respObj = RespObj(apiState: ApiState.loading,data: null);
+    notifyListeners();
     final response = await apiRepository.
     //categoryName can also be "{health/business/entertainment/technology}"
     //basically we can identify the categoryType by parsing 
@@ -27,12 +29,11 @@ class CategoryProvider extends ChangeNotifier{
       final modelData = articlesJson.map((item) => NewsModel.fromJson(item)).toList();
       
       respObj = RespObj(apiState: ApiState.success,data: modelData);
-      notifyListeners();
     }
     else{
       //error
       respObj = RespObj(apiState: ApiState.failure, data: response.data);
-      notifyListeners();
     }
+    notifyListeners();
   }
 }

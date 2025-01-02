@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_api/consts/constant.dart';
 import 'package:news_api/models/news_model.dart';
 import 'package:news_api/network/resp_obj.dart';
 import 'package:news_api/repository/everything_repository.dart';
@@ -10,9 +9,12 @@ class EverythingProvider extends ChangeNotifier{
   //initial
   RespObj respObj = RespObj(apiState: ApiState.initial,data: null);
   
-  Future<void> getApiData() async {
+  Future<void> getApiData(String searchString,{String? filteredBy, String? fromDate , String? toDate}) async {
 
-    final response = await apiRepository.getDesiredList(headlineEndpoint);
+     respObj = RespObj(apiState: ApiState.initial,data: null);
+     notifyListeners();
+
+    final response = await apiRepository.getDesiredList(searchString,filteredBy,fromDate,toDate);
     
     //success
     if(response.apiState == ApiState.success) {
@@ -23,12 +25,12 @@ class EverythingProvider extends ChangeNotifier{
       final modelData = articlesJson.map((item) => NewsModel.fromJson(item)).toList();
       
       respObj = RespObj(apiState: ApiState.success,data: modelData);
-      notifyListeners();
-    }
+      
+    }    
     else{
       //error
       respObj = RespObj(apiState: ApiState.failure, data: response.data);
-      notifyListeners();
     }
+    notifyListeners();
   }
 }
